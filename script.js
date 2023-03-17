@@ -198,15 +198,18 @@ const copyToClickBoard = function (buttonText, personalNote) {
       breakThisForName != 1 &&
       !checkThis.getAttribute("name").includes("undefined")
     ) {
-      console.log(checkThis.getAttribute("name"));
       newName = checkThis.getAttribute("name");
       breakThisForName = 1;
     }
   });
   fullName = newName;
   if (current == ar.length - 1) {
-    lastEmailContent = arr[arr.length - 2].innerText.split("\n").join(" ");
-    lastEmailContent = lastEmailContent.split("\t").join(" ");
+    notLast1 = arr[arr.length - 2].innerText.split("\n");
+    for (let i = 0; i < notLast1.length; i++) {
+      if (notLast1[i] == undefined) continue;
+      notLast1[i] = notLast1[i].replace("\t", " ");
+    }
+    lastEmailContent = notLast1.join(" ");
     date = ar[ar.length - 1].innerText.split("\n")[1];
   } else {
     let notLast1 = document
@@ -220,7 +223,11 @@ const copyToClickBoard = function (buttonText, personalNote) {
       for (let i = 0; i <= checkthisNow; i++) {
         delete notLast1[i];
       }
-      lastEmailContent = notLast1.join("");
+      for (let i = 0; i < notLast1.length; i++) {
+        if (notLast1[i] == undefined) continue;
+        notLast1[i] = notLast1[i].replace("\t", " ");
+      }
+      lastEmailContent = notLast1.join(" ");
     }
     if (notLast1.join("").includes("Save email as template")) {
       const newArray = notLast1.join(" ");
@@ -237,13 +244,21 @@ const copyToClickBoard = function (buttonText, personalNote) {
       delete notLast1[2];
       delete notLast1[3];
       delete notLast1[4];
-      lastEmailContent = notLast1.join("");
+      for (let i = 0; i < notLast1.length; i++) {
+        if (notLast1[i] == undefined) continue;
+        notLast1[i] = notLast1[i].replace("\t", " ");
+      }
+      lastEmailContent = notLast1.join(" ");
     } else {
       delete notLast1[0];
       delete notLast1[1];
       delete notLast1[2];
       delete notLast1[3];
-      lastEmailContent = notLast1.join("");
+      for (let i = 0; i < notLast1.length; i++) {
+        if (notLast1[i] == undefined) continue;
+        notLast1[i] = notLast1[i].replace("\t", " ");
+      }
+      lastEmailContent = notLast1.join(" ");
     }
     date = ar[current].innerText.split("\n")[1];
   }
@@ -255,10 +270,11 @@ const copyToClickBoard = function (buttonText, personalNote) {
   if (
     date.includes("minutes") ||
     date.includes("seconds") ||
-    date.includes("hours") ||
+    (date.includes("hours") &&
+      !date.includes(` ${new Date().getDate() - 1}`)) ||
     date.includes("minute") ||
     date.includes("second") ||
-    date.includes("hour") ||
+    (date.includes("hour") && !date.includes(` ${new Date().getDate() - 1}`)) ||
     !(
       date.includes("Jan") ||
       date.includes("Feb") ||

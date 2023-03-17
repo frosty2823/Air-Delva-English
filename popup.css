@@ -3,7 +3,7 @@
   src: url("/resources/fonts/Satisfy-Regular.ttf") format("truetype");
 }
 body {
-  width: 175px;
+  width: 176px;
 }
 .wrapper {
   align-items: center;
@@ -53,7 +53,7 @@ hr {
 }
 
 #personalNote {
-  width: 175px;
+  width: 172px;
 }
 
 #labelNote {
