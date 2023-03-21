@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Air Delva English",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "version_name": "Official",
   "description": "Fetches different variables from currently opened Gmail conversation and paste it automatically in AirTable and Google Sheets",
 

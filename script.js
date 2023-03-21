@@ -142,13 +142,13 @@ const copyToClickBoard = function (buttonText, personalNote) {
   let EnglishMonths = [
     "Jan",
     "Feb",
-    "March",
+    "Mar",
     "April",
     "May",
     "June",
     "July",
     "Aug",
-    "Sept",
+    "Sep",
     "Oct",
     "Nov",
     "Dec",
@@ -263,108 +263,43 @@ const copyToClickBoard = function (buttonText, personalNote) {
     date = ar[current].innerText.split("\n")[1];
   }
   const conversationURL = document.location.href;
-  let newDD = "";
-  let month = "";
-  let y3 = "";
-
-  if (
-    date.includes("minutes") ||
-    date.includes("seconds") ||
-    (date.includes("hours") &&
-      !date.includes(` ${new Date().getDate() - 1}`)) ||
-    date.includes("minute") ||
-    date.includes("second") ||
-    (date.includes("hour") && !date.includes(` ${new Date().getDate() - 1}`)) ||
-    !(
-      date.includes("Jan") ||
-      date.includes("Feb") ||
-      date.includes("Mar") ||
-      date.includes("April") ||
-      date.includes("May") ||
-      date.includes("June") ||
-      date.includes("July") ||
-      date.includes("Aug") ||
-      date.includes("Sept") ||
-      date.includes("Oct") ||
-      date.includes("Nov") ||
-      date.includes("Dec")
-    )
-  ) {
-    date = new Date();
-    newDD = date.getDate();
-    month = date.getMonth() + 1;
-    y3 = date.getFullYear();
-  } else {
-    if (
-      !(
-        date.includes("Mon") ||
-        date.includes("Tue") ||
-        date.includes("Wed") ||
-        date.includes("Thu") ||
-        date.includes("Fri") ||
-        date.includes("Sat") ||
-        date.includes("Sun")
-      )
-    ) {
-      let dateArray = date.split(" ");
-      let y1 = dateArray[2].split("");
-      y3 = y1[0] + y1[1] + y1[2] + y1[3];
-      month = 0;
-      let newD = dateArray[1].split(",");
-      newDD = newD[0];
-      if (dateArray[0] == "Jan") month = 1;
-      else if (dateArray[0] == "Feb") month = 2;
-      else if (dateArray[0] == "Mar") month = 3;
-      else if (dateArray[0] == "April") month = 4;
-      else if (dateArray[0] == "May") month = 5;
-      else if (dateArray[0] == "June") month = 6;
-      else if (dateArray[0] == "July") month = 7;
-      else if (dateArray[0] == "Aug") month = 8;
-      else if (dateArray[0] == "Sep") month = 9;
-      else if (dateArray[0] == "Oct") month = 10;
-      else if (dateArray[0] == "Nov") month = 11;
-      else if (dateArray[0] == "Dec") month = 12;
-    } else {
-      let dateArray = "";
-      if (
-        !(
-          date.includes("Jan") ||
-          date.includes("Feb") ||
-          date.includes("Mar") ||
-          date.includes("April") ||
-          date.includes("May") ||
-          date.includes("June") ||
-          date.includes("July") ||
-          date.includes("Aug") ||
-          date.includes("Sept") ||
-          date.includes("Oct") ||
-          date.includes("Nov") ||
-          date.includes("Dec")
-        )
-      )
-        dateArray = date.split(".");
-      else dateArray = date.split(",");
-      let previousDay = dateArray[dateArray.length - 2].split(" ");
-      month = 0;
-      newDD = previousDay[previousDay.length - 1];
-      month = previousDay[previousDay.length - 2];
-      let y2 = new Date();
-      y3 = y2.getFullYear();
-      if (month == "Jan") month = 1;
-      else if (month == "Feb") month = 2;
-      else if (month == "Mar") month = 3;
-      else if (month == "April") month = 4;
-      else if (month == "May") month = 5;
-      else if (month == "June") month = 6;
-      else if (month == "July") month = 7;
-      else if (month == "Aug") month = 8;
-      else if (month == "Sep") month = 9;
-      else if (month == "Oct") month = 10;
-      else if (month == "Nov") month = 11;
-      else if (month == "Dec") month = 12;
-    }
+  let dateFrom = ar[current]
+    .querySelector(".g3")
+    .getAttribute("title")
+    .split(" ");
+  let day = "",
+    month = "",
+    year = "",
+    y2 = "",
+    y3 = "";
+  if (EnglishMonths.includes(dateFrom[0])) {
+    day = dateFrom[1];
+    day = day.split(",")[0];
+    month = dateFrom[0];
+    year = dateFrom[2];
+    y2 = new Date();
+    y3 = y2.getFullYear() > year ? year : y2.getFullYear();
+  } else if (EnglishMonths.includes(dateFrom[1])) {
+    day = dateFrom[0];
+    month = dateFrom[1];
+    year = dateFrom[2];
+    y2 = new Date();
+    y3 = y2.getFullYear() > year ? year : y2.getFullYear();
   }
-  date = `${month}/${newDD}/${y3}`;
+  if (month == "Jan") month = 1;
+  else if (month == "Feb") month = 2;
+  else if (month == "Mar") month = 3;
+  else if (month == "April") month = 4;
+  else if (month == "May") month = 5;
+  else if (month == "June") month = 6;
+  else if (month == "July") month = 7;
+  else if (month == "Aug") month = 8;
+  else if (month == "Sep") month = 9;
+  else if (month == "Oct") month = 10;
+  else if (month == "Nov") month = 11;
+  else if (month == "Dec") month = 12;
+  date = `${month}/${day}/${y3}`;
+
   var textArea = document.createElement("textarea");
   textArea.value =
     fullName +
